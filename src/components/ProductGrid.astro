@@ -1,0 +1,97 @@
+---
+import { etalageSection, showcaseProducts } from '../data/homepage';
+---
+<section class="showcase section">
+  <div class="container">
+    <header class="showcase__header reveal">
+      <h2>{etalageSection.title}</h2>
+      <p>{etalageSection.description}</p>
+    </header>
+
+    <div class="showcase__grid">
+      {showcaseProducts.map((product) => (
+        <article class="showcase-card reveal">
+          <a href={product.href} class="showcase-card__image">
+            <img src={product.image} alt={product.alt} width={640} height={427} loading="lazy" />
+          </a>
+          <div class="showcase-card__body">
+            <a href={product.href} class="btn">{product.title}</a>
+            {product.description && (
+              <p><a href={product.href}>{product.description}</a></p>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase__header {
+    max-width: 40rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  .showcase-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .showcase-card__image {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .showcase-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+  }
+
+  .showcase-card:hover .showcase-card__image img {
+    transform: scale(1.04);
+  }
+
+  .showcase-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.25rem;
+  }
+
+  .showcase-card__body p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .showcase-card__body p a:hover {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 1023px) {
+    .showcase__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 599px) {
+    .showcase__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .showcase-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

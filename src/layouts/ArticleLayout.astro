@@ -1,0 +1,78 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  date?: string;
+}
+
+const { title, description, image, date } = Astro.props;
+import PageLayout from './PageLayout.astro';
+---
+<PageLayout title={title} description={description} image={image}>
+  <slot name="header" slot="header" />
+  <article class="article container">
+    {image && (
+      <div class="article__hero reveal">
+        <img src={image} alt={title} width={1200} height={630} loading="eager" />
+      </div>
+    )}
+    <header class="article__header reveal">
+      <h1>{title}</h1>
+      {date && (
+        <time class="article__date" datetime={date}>
+          {new Date(date).toLocaleDateString('nl-NL', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+      )}
+      {description && <p class="article__lead">{description}</p>}
+    </header>
+    <div class="article__body prose reveal">
+      <slot />
+    </div>
+  </article>
+  <slot name="footer" slot="footer" />
+</PageLayout>
+
+<style>
+  .article {
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+
+  .article__hero {
+    margin-bottom: 2rem;
+    border-radius: var(--card-radius-sm);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .article__hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .article__header {
+    max-width: 52rem;
+    margin-bottom: 2rem;
+  }
+
+  .article__date {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .article__lead {
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .article__body {
+    max-width: 72ch;
+  }
+</style>

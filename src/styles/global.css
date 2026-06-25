@@ -1,0 +1,242 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+/* Design tokens from interieurdesignerreview.nl Elementor kit */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f4;
+  --color-bg-dark: #000000;
+  --color-bg-card: #ffffff;
+  --color-primary: #000000;
+  --color-heading: #000000;
+  --color-text: #888682;
+  --color-muted: #888682;
+  --color-accent: #ffbc7d;
+  --color-secondary: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-icon: #888682;
+
+  --font-display: 'Clash Display', system-ui, sans-serif;
+  --font-heading: 'Clash Display', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-nav: 'DM Sans', system-ui, sans-serif;
+
+  --container-max: 1200px;
+  --section-padding: clamp(2.5rem, 6vw, 5rem);
+  --section-padding-sm: clamp(2rem, 4vw, 3.5rem);
+  --card-radius: 0;
+  --card-radius-sm: 4px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 0 10px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+  line-height: 1.15;
+  margin: 0 0 0.75em;
+  font-weight: 600;
+}
+
+h1 { font-size: clamp(2.25rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+h4 { font-size: clamp(1rem, 2vw, 1.25rem); }
+
+p {
+  margin: 0 0 1em;
+  color: var(--color-muted);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  font-family: var(--font-nav);
+  font-weight: 500;
+  transition: top var(--transition);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-padding);
+  position: relative;
+}
+
+.section--sm {
+  padding-block: var(--section-padding-sm);
+}
+
+.section--dark {
+  background: var(--color-bg-dark);
+  color: var(--color-secondary);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-secondary);
+}
+
+.section--dark p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.section--soft {
+  background: var(--color-bg-soft);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--font-nav);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--card-radius-sm);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-bg-soft);
+}
+
+.btn--dark {
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  border-color: var(--color-primary);
+}
+
+.btn--dark:hover {
+  background: #1a1a1a;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.card-grid--6 { grid-template-columns: repeat(6, 1fr); }
+
+@media (max-width: 1023px) {
+  .card-grid--6 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 599px) {
+  .card-grid--6,
+  .card-grid--4,
+  .card-grid--3,
+  .card-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 479px) {
+  .card-grid--6,
+  .card-grid--4,
+  .card-grid--3,
+  .card-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prose {
+  max-width: 72ch;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 2rem;
+}
+
+.prose img {
+  border-radius: var(--card-radius-sm);
+  margin-block: 1.5rem;
+}
+
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  opacity: 0.8;
+}
+
+.link-list a {
+  display: block;
+  padding: 0.25rem 0;
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+
+.link-list a:hover {
+  color: var(--color-primary);
+}

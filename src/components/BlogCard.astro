@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, pubDate, featuredImage, imageAlt } = entry.data;
+const image = featuredImage || '/images/2023/05/Koudschuim-matras.jpg';
+---
+<article class="blog-card reveal">
+  <a href={`/${entry.id}/`} class="blog-card__link">
+    <div class="blog-card__image">
+      <img src={image} alt={imageAlt || title} width={640} height={400} loading="lazy" />
+    </div>
+    <div class="blog-card__body">
+      <time class="blog-card__date" datetime={pubDate.toISOString()}>
+        {pubDate.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </time>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
+  </a>
+</article>
+
+<style>
+  .blog-card__link {
+    display: block;
+    transition: transform var(--transition);
+  }
+
+  .blog-card__link:hover {
+    transform: translateY(-4px);
+  }
+
+  .blog-card__image {
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 1rem;
+    background: var(--color-bg-soft);
+  }
+
+  .blog-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+  }
+
+  .blog-card__link:hover .blog-card__image img {
+    transform: scale(1.04);
+  }
+
+  .blog-card__date {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    transition: color var(--transition);
+  }
+
+  .blog-card__link:hover h3 {
+    color: var(--color-muted);
+  }
+
+  .blog-card p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

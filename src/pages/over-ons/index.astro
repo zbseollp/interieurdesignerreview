@@ -1,0 +1,56 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<PageLayout
+  title="Over ons"
+  description="Leer meer over interieurdesignerreview.nl en ons team van interieurexperts die de beste designartikelen voor jou reviewen."
+>
+  <Header slot="header" />
+  <div class="container">
+    <header class="page-header reveal">
+      <p class="page-header__label">Over ons</p>
+      <h1>Over interieurdesignerreview.nl</h1>
+    </header>
+    <div class="about-content prose reveal">
+      <p>
+        Interieurdesignerreview.nl geeft waardevolle feedback over talloze artikelen met betrekking
+        tot interieur en helpt je daarmee tot een weloverwogen keuze om jouw droomhuis te realiseren.
+      </p>
+      <p>
+        Onze kenners houden zich bezig met de laatste ontwikkelingen op het gebied van interieur en
+        interieurdesign. Stuk voor stuk hebben ze een achtergrond in deze branche waardoor je een
+        professioneel inzicht krijgt in de wereld van interieurdesign.
+      </p>
+      <p>
+        Wij weten wat de beste designartikelen zijn voor bij jou in huis omdat in ons onderzoek
+        alleen de beste reviews naar voren komen. Je vindt deze per categorie in de top 10 lijstjes.
+      </p>
+      <p>Laat je door ons inspireren!</p>
+    </div>
+  </div>
+  <Footer slot="footer" />
+</PageLayout>
+
+<style>
+  .page-header {
+    max-width: 52rem;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+  }
+
+  .page-header__label {
+    font-family: var(--font-nav);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .about-content {
+    padding-bottom: 3rem;
+    max-width: 52rem;
+  }
+</style>

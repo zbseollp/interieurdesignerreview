@@ -1,0 +1,54 @@
+---
+import { professionalSection } from '../data/homepage';
+---
+<section class="testimonials section section--soft">
+  <div class="container testimonials__grid">
+    <div class="testimonials__content reveal">
+      <h2>{professionalSection.title}</h2>
+      <p>{professionalSection.description}</p>
+      <a href={professionalSection.ctaHref} class="btn btn--dark">{professionalSection.ctaLabel}</a>
+    </div>
+    <div class="testimonials__image reveal">
+      <img
+        src={professionalSection.image}
+        alt={professionalSection.imageAlt}
+        width={614}
+        height={698}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .testimonials__content h2 {
+    margin-bottom: 1rem;
+  }
+
+  .testimonials__content p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .testimonials__image img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 767px) {
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

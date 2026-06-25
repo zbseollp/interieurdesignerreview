@@ -1,0 +1,60 @@
+---
+import { trendsIntro, trendSections } from '../data/homepage';
+---
+<section class="services section">
+  <div class="container">
+    <header class="services__intro reveal">
+      <h2>{trendsIntro.title}</h2>
+      <p>{trendsIntro.description}</p>
+    </header>
+
+    <div class="services__grid card-grid card-grid--3">
+      {trendSections.map((section) => (
+        <div class="service-card reveal">
+          <h3>{section.title}</h3>
+          <div class="service-card__image">
+            <img src={section.image} alt={section.alt} width={640} height={427} loading="lazy" />
+          </div>
+          <ul class="link-list">
+            {section.links.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services__intro {
+    max-width: 52rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .services__intro h2 {
+    margin-bottom: 1rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-card__image {
+    margin-bottom: 1rem;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+  }
+
+  .service-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+  }
+
+  .service-card:hover .service-card__image img {
+    transform: scale(1.03);
+  }
+</style>

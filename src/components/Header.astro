@@ -1,0 +1,198 @@
+---
+import { mainNavigation } from '../data/navigation';
+import Navigation from './Navigation.astro';
+
+const currentPath = Astro.url.pathname;
+---
+<header class="header">
+  <div class="header__inner container">
+    <a href="/" class="header__logo" aria-label="interieurdesignerreview.nl - Home">
+      <img src="/images/2022/11/Group-95.svg" alt="interieurdesignerreview.nl" width="357" height="32" />
+    </a>
+
+    <div class="header__nav">
+      <Navigation items={mainNavigation} currentPath={currentPath} />
+    </div>
+
+    <div class="header__actions">
+      <button class="search-toggle" type="button" aria-label="Zoeken">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <button class="nav-toggle" type="button" aria-label="Menu toggle" aria-expanded="false">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-overlay" role="search">
+    <form class="search-overlay__form container" action="/" method="get">
+      <label class="sr-only" for="site-search">Zoeken</label>
+      <input id="site-search" type="search" name="s" placeholder="Zoeken..." class="search-overlay__input" />
+      <button type="button" class="search-overlay__close" aria-label="Sluit zoeken">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .header__logo img {
+    width: clamp(200px, 28vw, 357px);
+    height: auto;
+    transition: opacity var(--transition);
+  }
+
+  .header__logo:hover img {
+    opacity: 0.8;
+  }
+
+  .header__nav {
+    display: none;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .search-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    transition: color var(--transition);
+  }
+
+  .search-toggle:hover {
+    color: var(--color-muted);
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-toggle__bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-primary);
+    transition: transform var(--transition), opacity var(--transition);
+  }
+
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition), visibility var(--transition);
+  }
+
+  .search-overlay--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .search-overlay__form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .search-overlay__input {
+    flex: 1;
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    color: var(--color-secondary);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    outline: none;
+  }
+
+  .search-overlay__input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .search-overlay__close {
+    background: none;
+    border: none;
+    color: var(--color-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  @media (min-width: 1025px) {
+    .header__nav {
+      display: block;
+    }
+
+    .search-toggle {
+      display: flex;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+  }
+</style>

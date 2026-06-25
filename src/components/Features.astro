@@ -1,0 +1,88 @@
+---
+import { categoryCards } from '../data/homepage';
+
+const icons: Record<string, string> = {
+  electronics: `<svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none" aria-hidden="true"><path d="M33.3333 12H15.3333C13.6765 12 12.3333 13.3431 12.3333 15V33C12.3333 34.6569 13.6765 36 15.3333 36H33.3333C34.9902 36 36.3333 34.6569 36.3333 33V15C36.3333 13.3431 34.9902 12 33.3333 12Z" stroke="#888682" stroke-width="2"/><path d="M24.3333 36V41C24.3333 41.7956 24.0172 42.5587 23.4546 43.1213C22.892 43.6839 22.129 44 21.3333 44H8.33331M20.3333 12V4M28.3333 12V4M22.3333 24H26.3333" stroke="#888682" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  furniture: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M12 21H4V35H12V21ZM44 21H36V35H44V21Z" stroke="#888682" stroke-width="2" stroke-linejoin="round"/><path d="M8 20V8H40V20M8 36V40M40 36V40M36 27H12V35H36V27Z" stroke="#888682" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  decor: `<svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none" aria-hidden="true"><path d="M44.6668 4.00001C44.6668 4.00001 34.2568 2.20101 30.6668 8.00001C27.9948 12.317 31.6668 17 31.6668 17M44.6668 4.00001L31.6668 17M44.6668 4.00001C44.6668 4.00001 46.4658 14.41 40.6668 18C36.3498 20.672 31.6668 17 31.6668 17M31.6668 17L28.6668 20M31.6668 31L28.6668 28M17.9308 17L20.9308 20M17.9308 31L20.9308 28M44.6668 44C44.6668 44 34.2568 45.799 30.6668 40C27.9948 35.683 31.6668 31 31.6668 31L44.6668 44ZM44.6668 44C44.6668 44 46.4658 33.59 40.6668 30C36.3498 27.328 31.6668 31 31.6668 31L44.6668 44ZM44.6668 44L31.6668 31L44.6668 44ZM4.93076 4.00001C4.93076 4.00001 15.3408 2.20101 18.9308 8.00001C21.6028 12.317 17.9308 17 17.9308 17L4.93076 4.00001ZM4.93076 4.00001C4.93076 4.00001 3.13076 14.41 8.93076 18C13.2468 20.672 17.9308 17 17.9308 17L4.93076 4.00001ZM4.93076 4.00001L17.9308 17L4.93076 4.00001ZM4.93076 44C4.93076 44 15.3408 45.799 18.9308 40C21.6028 35.683 17.9308 31 17.9308 31L4.93076 44ZM4.93076 44C4.93076 44 3.13076 33.59 8.93076 30C13.2468 27.328 17.9308 31 17.9308 31L4.93076 44ZM4.93076 44L17.9308 31L4.93076 44Z" stroke="#888682" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  art: `<svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none" aria-hidden="true"><path d="M24.3334 40.944C26.5312 42.9156 29.3808 44.0042 32.3334 44C38.9604 44 44.3334 38.627 44.3334 32C44.3334 26.409 40.5094 21.71 35.3334 20.378" stroke="#888682" stroke-width="2" stroke-linejoin="round"/><path d="M13.3334 20.378C8.15737 21.71 4.33337 26.408 4.33337 32C4.33337 38.627 9.70637 44 16.3334 44C22.9604 44 28.3334 38.627 28.3334 32C28.3334 30.45 28.0394 28.97 27.5054 27.61" stroke="#888682" stroke-width="2" stroke-linejoin="round"/><path d="M24.3334 28C30.9604 28 36.3334 22.627 36.3334 16C36.3334 9.373 30.9604 4 24.3334 4C17.7064 4 12.3334 9.373 12.3334 16C12.3334 22.627 17.7064 28 24.3334 28Z" stroke="#888682" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  wall: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M4.00012 24H44.0001M4.00012 32H44.0001M24.0001 24V32M16.0001 32V40M16.0001 16V24M32.0001 32V40M32.0001 16V24M4.00012 9V40H44.0001V9H36.0001V16H28.0001V9H20.0001V16H12.0001V9H4.00012Z" stroke="#888682" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  floor: `<svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none" aria-hidden="true"><path d="M39.6667 6H9.66675C8.00989 6 6.66675 7.34315 6.66675 9V39C6.66675 40.6569 8.00989 42 9.66675 42H39.6667C41.3236 42 42.6667 40.6569 42.6667 39V9C42.6667 7.34315 41.3236 6 39.6667 6Z" stroke="#888682" stroke-width="2" stroke-linejoin="round"/><path d="M28.6667 6L6.66675 28M42.6667 20L20.6667 42M40.6667 8L8.66675 40M12.6667 22L19.6667 29M29.6667 19L36.6667 26" stroke="#888682" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+---
+<section class="features">
+  <div class="container">
+    <div class="features__grid">
+      {categoryCards.map((item) => (
+        <a href={item.href} class="feature-card reveal">
+          <div class="feature-card__icon" set:html={icons[item.icon]} />
+          <p class="feature-card__title">{item.title}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    margin-top: -5rem;
+    position: relative;
+    z-index: 9;
+    padding-bottom: 2rem;
+  }
+
+  .features__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.625rem;
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0.5rem;
+    background: var(--color-bg-card);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .feature-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+  }
+
+  .feature-card__title {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .features__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 599px) {
+    .features {
+      margin-top: -2rem;
+    }
+
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

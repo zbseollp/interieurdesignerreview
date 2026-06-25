@@ -1,0 +1,134 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { mainNavigation } from '../../data/navigation';
+import slugs from '../../data/slugs.json';
+
+const allSlugs = slugs as string[];
+const categoryPages = ['dekbedden', 'huishouden', 'bedden', 'matrassen', 'meubels'];
+---
+<PageLayout
+  title="Sitemap"
+  description="Overzicht van alle pagina's op interieurdesignerreview.nl."
+>
+  <Header slot="header" />
+  <div class="container">
+    <header class="page-header reveal">
+      <h1>Sitemap</h1>
+      <p>Overzicht van alle pagina's op interieurdesignerreview.nl.</p>
+    </header>
+
+    <div class="sitemap-grid reveal">
+      <section>
+        <h2>Hoofdpagina's</h2>
+        <ul class="sitemap-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/blogoverzicht/">Blogoverzicht</a></li>
+          <li><a href="/over-ons/">Over ons</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </section>
+
+      {mainNavigation
+        .filter((item) => item.children)
+        .map((item) => (
+          <section>
+            <h2><a href={item.href}>{item.label}</a></h2>
+            <ul class="sitemap-links">
+              {item.children?.map((child) => (
+                <li><a href={child.href}>{child.label}</a></li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+      <section>
+        <h2>Categorieën</h2>
+        <ul class="sitemap-links">
+          {categoryPages.map((slug) => (
+            <li><a href={`/${slug}/`}>{slug.charAt(0).toUpperCase() + slug.slice(1)}</a></li>
+          ))}
+        </ul>
+      </section>
+
+      {allSlugs.length > 0 && (
+        <section class="sitemap-all">
+          <h2>Alle pagina's</h2>
+          <ul class="sitemap-links sitemap-links--columns">
+            {allSlugs.map((slug) => (
+              <li><a href={`/${slug}/`}>{slug.replace(/-/g, ' ')}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </div>
+  <Footer slot="footer" />
+</PageLayout>
+
+<style>
+  .page-header {
+    padding-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .sitemap-all {
+    grid-column: 1 / -1;
+  }
+
+  .sitemap-grid h2 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .sitemap-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sitemap-links li {
+    margin-bottom: 0.4rem;
+  }
+
+  .sitemap-links a {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .sitemap-links a:hover {
+    color: var(--color-primary);
+  }
+
+  .sitemap-links--columns {
+    columns: 3;
+    column-gap: 2rem;
+  }
+
+  @media (max-width: 1023px) {
+    .sitemap-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sitemap-links--columns {
+      columns: 2;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .sitemap-grid,
+    .sitemap-links--columns {
+      grid-template-columns: 1fr;
+      columns: 1;
+    }
+  }
+</style>

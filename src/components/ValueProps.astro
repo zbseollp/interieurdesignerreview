@@ -1,0 +1,48 @@
+---
+import { featureBoxes } from '../data/homepage';
+
+const icons: Record<string, string> = {
+  calendar: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M10 44H38C40.206 44 42 42.206 42 40V12C42 9.794 40.206 8 38 8H34V4H30V8H18V4H14V8H10C7.794 8 6 9.794 6 12V40C6 42.206 7.794 44 10 44ZM10 14H38V18H10V14Z" fill="#888682"/></svg>`,
+  shield: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M40.992 12.212L25.046 4.21195C24.7686 4.07183 24.4623 3.9985 24.1515 3.99781C23.8407 3.99711 23.5341 4.06908 23.256 4.20795L7.20202 12.208C6.60802 12.508 6.19802 13.082 6.11402 13.742C6.08802 13.936 3.82402 33.2239 23.196 43.7579C23.4938 43.9204 23.8282 44.004 24.1674 44.0008C24.5065 43.9977 24.8393 43.9079 25.134 43.74C43.748 33.222 42.162 14.594 42.086 13.806C42.0533 13.4694 41.9357 13.1467 41.7444 12.868C41.5531 12.5892 41.2942 12.3635 40.992 12.212Z" fill="#888682"/></svg>`,
+  bag: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M10 44.0001H38C39.0609 44.0001 40.0783 43.5786 40.8284 42.8285C41.5786 42.0783 42 41.0609 42 40.0001V18.0001C42 17.4696 41.7893 16.9609 41.4142 16.5858C41.0391 16.2108 40.5304 16.0001 40 16.0001H34V14.4461C34 9.22805 30.194 4.55605 25 4.05005C23.6097 3.91188 22.206 4.06626 20.879 4.50325C19.552 4.94025 18.3311 5.65019 17.295 6.5874C16.2589 7.52461 15.4305 8.66834 14.863 9.94499C14.2955 11.2216 14.0015 12.603 14 14.0001V16.0001H8C7.46957 16.0001 6.96086 16.2108 6.58579 16.5858C6.21071 16.9609 6 17.4696 6 18.0001V40.0001C6 41.0609 6.42143 42.0783 7.17157 42.8285C7.92172 43.5786 8.93913 44.0001 10 44.0001ZM34 20.0001V24.0001H30V20.0001H34ZM18 14.0001C18 10.6921 20.692 8.00005 24 8.00005C27.308 8.00005 30 10.6921 30 14.0001V16.0001H18V14.0001ZM14 20.0001H18V24.0001H14V20.0001Z" fill="#888682"/></svg>`,
+};
+---
+<section class="value-props section section--soft">
+  <div class="container">
+    <div class="value-props__grid card-grid card-grid--3">
+      {featureBoxes.map((box) => (
+        <div class="value-card reveal">
+          <div class="value-card__icon" set:html={icons[box.icon]} />
+          <h4>{box.title}</h4>
+          <p>{box.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .value-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .value-card__icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .value-card h4 {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+  }
+
+  .value-card p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+</style>
