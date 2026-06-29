@@ -1,6 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import ArticleLayout from './ArticleLayout.astro';
+import RelatedBlogPosts from '../components/RelatedBlogPosts.astro';
+import { resolveHeroImage } from '../utils/images';
 
 interface Props {
   entry: CollectionEntry<'blog'>;
@@ -8,14 +11,20 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, description, pubDate, featuredImage } = entry.data;
+
+const relatedPosts = (await getCollection('blog'))
+  .filter((post) => post.id !== entry.id)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
 ---
 <ArticleLayout
   title={title}
   description={description}
-  image={featuredImage || '/images/2023/05/Koudschuim-matras.jpg'}
+  image={resolveHeroImage(featuredImage)}
   date={pubDate.toISOString()}
 >
   <slot name="header" slot="header" />
   <slot />
+  <RelatedBlogPosts slot="after" posts={relatedPosts} />
   <slot name="footer" slot="footer" />
 </ArticleLayout>

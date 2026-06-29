@@ -172,6 +172,17 @@ p {
   background: #1a1a1a;
 }
 
+.btn--light {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  border-color: var(--color-secondary);
+}
+
+.btn--light:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-sm);
+}
+
 .card-grid {
   display: grid;
   gap: 1.25rem;

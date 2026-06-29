@@ -1,0 +1,46 @@
+---
+import BlogCard from './BlogCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  title?: string;
+}
+
+const { posts, title = 'Laatste blogs' } = Astro.props;
+---
+{posts.length > 0 && (
+  <section class="related-blogs">
+    <div class="container">
+      <h2 class="related-blogs__title reveal">{title}</h2>
+      <div class="related-blogs__grid">
+        {posts.map((post) => <BlogCard entry={post} />)}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .related-blogs {
+    border-top: 1px solid var(--color-border);
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    background: var(--color-bg-soft);
+  }
+
+  .related-blogs__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 2rem;
+  }
+
+  .related-blogs__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    .related-blogs__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

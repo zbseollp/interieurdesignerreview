@@ -8,13 +8,16 @@ interface Props {
 
 const { title, description, image, date } = Astro.props;
 import PageLayout from './PageLayout.astro';
+import { resolveHeroImage } from '../utils/images';
+
+const heroImage = resolveHeroImage(image);
 ---
-<PageLayout title={title} description={description} image={image}>
+<PageLayout title={title} description={description} image={heroImage}>
   <slot name="header" slot="header" />
   <article class="article container">
-    {image && (
+    {heroImage && (
       <div class="article__hero reveal">
-        <img src={image} alt={title} width={1200} height={630} loading="eager" />
+        <img src={heroImage} alt={title} width={1200} height={630} loading="eager" />
       </div>
     )}
     <header class="article__header reveal">
@@ -34,6 +37,7 @@ import PageLayout from './PageLayout.astro';
       <slot />
     </div>
   </article>
+  <slot name="after" />
   <slot name="footer" slot="footer" />
 </PageLayout>
 

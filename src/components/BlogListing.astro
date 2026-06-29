@@ -1,0 +1,92 @@
+---
+import BlogCard from './BlogCard.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getPage } from '../data/pages';
+
+interface Props {
+  label?: string;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { label = 'Blogoverzicht', posts } = Astro.props;
+const pageData = getPage('blogoverzicht');
+const heroImage = pageData?.featuredImage;
+
+const introParagraphs = [
+  'Onze interieurdesigners houden je in hun laatste blogs op de hoogte van al het nieuws met betrekking tot interieurdesign.',
+  'Onze designers hebben diepgaande kennis in de interieur design industrie. Sommige zijn zelf actief geweest als designer en sommige werken part time als freelancer naast hun studie in interieur design.',
+  'Zodoende hebben we een all-round team van evaring en opstormend talent in deze sector om jou van al het nieuws en trends in deze boeiende branche te voorzien.',
+];
+---
+<div class="container">
+  <header class="page-header reveal">
+    <p class="page-header__label">{label}</p>
+    <h1>{label}</h1>
+    {introParagraphs.map((paragraph) => (
+      <p class="page-header__text">{paragraph}</p>
+    ))}
+    {heroImage && (
+      <div class="page-header__hero">
+        <img src={heroImage} alt="" width={1024} height={758} loading="eager" />
+      </div>
+    )}
+  </header>
+  <div class="blog-grid">
+    {posts.length > 0 ? (
+      posts.map((post) => <BlogCard entry={post} />)
+    ) : (
+      <p>Binnenkort vind je hier onze nieuwste blogartikelen.</p>
+    )}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    max-width: 52rem;
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+  }
+
+  .page-header__label {
+    font-family: var(--font-nav);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header h1 {
+    margin-bottom: 1rem;
+  }
+
+  .page-header__text {
+    margin-bottom: 1rem;
+    line-height: 1.65;
+  }
+
+  .page-header__hero {
+    margin-top: 1.5rem;
+    border-radius: var(--card-radius-sm);
+    overflow: hidden;
+  }
+
+  .page-header__hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (max-width: 767px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

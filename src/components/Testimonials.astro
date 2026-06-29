@@ -1,12 +1,12 @@
 ---
 import { professionalSection } from '../data/homepage';
 ---
-<section class="testimonials section section--soft">
+<section class="testimonials section section--dark">
   <div class="container testimonials__grid">
     <div class="testimonials__content reveal">
       <h2>{professionalSection.title}</h2>
       <p>{professionalSection.description}</p>
-      <a href={professionalSection.ctaHref} class="btn btn--dark">{professionalSection.ctaLabel}</a>
+      <a href={professionalSection.ctaHref} class="btn btn--light">{professionalSection.ctaLabel}</a>
     </div>
     <div class="testimonials__image reveal">
       <img
@@ -36,6 +36,7 @@ import { professionalSection } from '../data/homepage';
     margin-bottom: 1.5rem;
     font-size: 1rem;
     line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
   }
 
   .testimonials__image img {

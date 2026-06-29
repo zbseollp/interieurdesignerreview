@@ -2,64 +2,20 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import BlogCard from '../../components/BlogCard.astro';
+import BlogListing from '../../components/BlogListing.astro';
 import { getCollection } from 'astro:content';
+import { getPage } from '../../data/pages';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const pageData = getPage('blogoverzicht');
 ---
 <PageLayout
   title="Blog"
-  description="Handige tips en informatie voor je interieur. Bekijk onze nieuwste artikelen over woninginrichting, meubels en interieurproducten."
+  description={pageData?.description}
 >
   <Header slot="header" />
-  <div class="container">
-    <header class="page-header reveal">
-      <p class="page-header__label">Blog</p>
-      <h1>Benieuwd naar de laatste trends?</h1>
-      <p>
-        Onze kenners houden zich bezig met de laatste ontwikkelingen op het gebied van interieur en
-        interieurdesign. Je kunt onze laatste productrecensies en blogartikelen hieronder lezen.
-      </p>
-    </header>
-    <div class="blog-grid">
-      {posts.length > 0 ? (
-        posts.map((post) => <BlogCard entry={post} />)
-      ) : (
-        <p>Binnenkort vind je hier onze nieuwste blogartikelen.</p>
-      )}
-    </div>
-  </div>
+  <BlogListing label="Blogoverzicht" posts={posts} />
   <Footer slot="footer" />
 </PageLayout>
-
-<style>
-  .page-header {
-    max-width: 52rem;
-    margin-bottom: 3rem;
-    padding-top: 2rem;
-  }
-
-  .page-header__label {
-    font-family: var(--font-nav);
-    font-size: 0.8125rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    padding-bottom: 3rem;
-  }
-
-  @media (max-width: 767px) {
-    .blog-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

@@ -59,7 +59,7 @@ function createFallbackPage(slug: string) {
     slug,
     title: isProduct ? `Beste ${title}` : title,
     description: `Lees alles over ${title.toLowerCase()} op interieurdesignerreview.nl.`,
-    featuredImage: '/images/2023/05/Koudschuim-matras.jpg',
+    featuredImage: '',
     content: `<p>Welkom op interieurdesignerreview.nl. In dit artikel delen we onze tips en ervaringen over ${title.toLowerCase()}. Bekijk regelmatig onze site voor de nieuwste productvergelijkingen en interieurtips.</p>`,
   };
 }
@@ -70,7 +70,7 @@ function getCategoryItems(slug: string) {
   return navItem.children.map((child) => ({
     title: child.label,
     href: child.href,
-    image: '/images/2023/05/Koudschuim-matras.jpg',
+    image: '',
     alt: child.label,
   }));
 }

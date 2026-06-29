@@ -1,18 +1,25 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import ArticleLayout from './ArticleLayout.astro';
+import { resolveHeroImage } from '../utils/images';
 
 interface Props {
   entry: CollectionEntry<'pages'>;
 }
 
 const { entry } = Astro.props;
-const { title, description, featuredImage } = entry.data;
+const { title, description, featuredImage, updatedDate } = entry.data;
+const dateStr = updatedDate
+  ? typeof updatedDate === 'string'
+    ? updatedDate
+    : updatedDate.toISOString().slice(0, 10)
+  : undefined;
 ---
 <ArticleLayout
   title={title}
   description={description}
-  image={featuredImage || '/images/2023/05/Koudschuim-matras.jpg'}
+  image={resolveHeroImage(featuredImage)}
+  date={dateStr}
 >
   <slot name="header" slot="header" />
   <slot />

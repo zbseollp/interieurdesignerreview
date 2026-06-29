@@ -1,0 +1,45 @@
+---
+interface Props {
+  class?: string;
+  /** light = white logo for dark backgrounds (header/footer). dark = black logo for light backgrounds. */
+  theme?: 'light' | 'dark';
+}
+
+const { class: className, theme = 'light' } = Astro.props;
+
+const logoSrc =
+  theme === 'light'
+    ? '/images/2022/11/Group-95.svg'
+    : '/images/2022/11/Group-95-dark.svg';
+---
+<a href="/" class:list={['site-logo', className]} aria-label="InterieurDesignerReview.nl - Home">
+  <img
+    src={logoSrc}
+    alt=""
+    width="357"
+    height="32"
+    class="site-logo__image"
+    decoding="async"
+  />
+</a>
+
+<style>
+  .site-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 0;
+    transition: opacity var(--transition);
+  }
+
+  .site-logo:hover {
+    opacity: 0.85;
+  }
+
+  .site-logo__image {
+    display: block;
+    width: auto;
+    height: 32px;
+    max-width: min(357px, 55vw);
+  }
+</style>

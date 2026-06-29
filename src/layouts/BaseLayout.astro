@@ -35,48 +35,6 @@ const fullTitle =
     </main>
     <slot name="footer" />
     <script>
-      const nav = document.querySelector('.nav');
-      const toggle = document.querySelector('.nav-toggle');
-      const searchToggle = document.querySelector('.search-toggle');
-      const searchOverlay = document.querySelector('.search-overlay');
-
-      toggle?.addEventListener('click', () => {
-        const expanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!expanded));
-        nav?.classList.toggle('nav--open');
-        document.body.classList.toggle('nav-open');
-      });
-
-      document.querySelectorAll('.nav-item--has-children > .nav-link').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          if (window.innerWidth <= 1024) {
-            e.preventDefault();
-            link.parentElement?.classList.toggle('nav-item--expanded');
-          }
-        });
-      });
-
-      searchToggle?.addEventListener('click', () => {
-        searchOverlay?.classList.toggle('search-overlay--open');
-        const input = searchOverlay?.querySelector('input');
-        if (searchOverlay?.classList.contains('search-overlay--open')) {
-          (input as HTMLInputElement)?.focus();
-        }
-      });
-
-      searchOverlay?.querySelector('.search-overlay__close')?.addEventListener('click', () => {
-        searchOverlay?.classList.remove('search-overlay--open');
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          nav?.classList.remove('nav--open');
-          toggle?.setAttribute('aria-expanded', 'false');
-          document.body.classList.remove('nav-open');
-          searchOverlay?.classList.remove('search-overlay--open');
-        }
-      });
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -88,7 +46,13 @@ const fullTitle =
         { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
       );
 
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.classList.add('is-visible');
+        }
+        observer.observe(el);
+      });
     </script>
   </body>
 </html>
@@ -100,6 +64,10 @@ const fullTitle =
     overflow: hidden;
   }
 
+  .header {
+    overflow: visible;
+  }
+
   .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -109,5 +77,13 @@ const fullTitle =
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 </style>

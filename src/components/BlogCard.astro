@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { resolveCardImage } from '../utils/images';
 
 interface Props {
   entry: CollectionEntry<'blog'>;
@@ -7,38 +8,50 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, description, pubDate, featuredImage, imageAlt } = entry.data;
-const image = featuredImage || '/images/2023/05/Koudschuim-matras.jpg';
+const image = resolveCardImage(featuredImage);
+const href = `/${entry.id}/`;
+
+function cleanExcerpt(text: string): string {
+  return text
+    .replace(/\/\*! elementor[\s\S]*?\*\//g, '')
+    .replace(/\.elementor[\s\S]*/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const excerpt = cleanExcerpt(description);
 ---
 <article class="blog-card reveal">
-  <a href={`/${entry.id}/`} class="blog-card__link">
-    <div class="blog-card__image">
+  {image && (
+    <a href={href} class="blog-card__image" tabindex="-1" aria-hidden="true">
       <img src={image} alt={imageAlt || title} width={640} height={400} loading="lazy" />
-    </div>
-    <div class="blog-card__body">
-      <time class="blog-card__date" datetime={pubDate.toISOString()}>
-        {pubDate.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' })}
-      </time>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
-  </a>
+    </a>
+  )}
+  <div class="blog-card__body">
+    <h3 class="blog-card__title">
+      <a href={href}>{title}</a>
+    </h3>
+    <time class="blog-card__date" datetime={pubDate.toISOString()}>
+      {pubDate.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </time>
+    <p class="blog-card__excerpt">{excerpt}</p>
+    <a href={href} class="blog-card__read-more">Lees verder »</a>
+  </div>
 </article>
 
 <style>
-  .blog-card__link {
-    display: block;
-    transition: transform var(--transition);
-  }
-
-  .blog-card__link:hover {
-    transform: translateY(-4px);
+  .blog-card {
+    display: flex;
+    flex-direction: column;
   }
 
   .blog-card__image {
+    display: block;
     overflow: hidden;
     aspect-ratio: 16 / 10;
     margin-bottom: 1rem;
     background: var(--color-bg-soft);
+    transition: transform var(--transition);
   }
 
   .blog-card__image img {
@@ -48,33 +61,50 @@ const image = featuredImage || '/images/2023/05/Koudschuim-matras.jpg';
     transition: transform 0.45s ease;
   }
 
-  .blog-card__link:hover .blog-card__image img {
+  .blog-card:hover .blog-card__image img {
     transform: scale(1.04);
+  }
+
+  .blog-card__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .blog-card__title a {
+    color: var(--color-heading);
+    transition: color var(--transition);
+  }
+
+  .blog-card__title a:hover {
+    color: var(--color-muted);
   }
 
   .blog-card__date {
     display: block;
     font-size: 0.8125rem;
     color: var(--color-muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .blog-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    transition: color var(--transition);
-  }
-
-  .blog-card__link:hover h3 {
-    color: var(--color-muted);
-  }
-
-  .blog-card p {
+  .blog-card__excerpt {
     font-size: 0.9375rem;
     line-height: 1.6;
+    margin-bottom: 0.75rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .blog-card__read-more {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    transition: color var(--transition);
+  }
+
+  .blog-card__read-more:hover {
+    color: var(--color-muted);
   }
 </style>

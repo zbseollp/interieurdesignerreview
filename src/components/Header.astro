@@ -1,20 +1,17 @@
 ---
 import { mainNavigation } from '../data/navigation';
 import Navigation from './Navigation.astro';
+import Logo from './Logo.astro';
 
 const currentPath = Astro.url.pathname;
 ---
 <header class="header">
   <div class="header__inner container">
-    <a href="/" class="header__logo" aria-label="interieurdesignerreview.nl - Home">
-      <img src="/images/2022/11/Group-95.svg" alt="interieurdesignerreview.nl" width="357" height="32" />
-    </a>
+    <Logo class="header__logo" theme="light" />
 
-    <div class="header__nav">
+    <div class="header__menu">
       <Navigation items={mainNavigation} currentPath={currentPath} />
-    </div>
 
-    <div class="header__actions">
       <button class="search-toggle" type="button" aria-label="Zoeken">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
@@ -22,7 +19,7 @@ const currentPath = Astro.url.pathname;
         </svg>
       </button>
 
-      <button class="nav-toggle" type="button" aria-label="Menu toggle" aria-expanded="false">
+      <button class="nav-toggle" type="button" aria-label="Menu openen" aria-expanded="false" aria-controls="site-nav">
         <span class="nav-toggle__bar"></span>
         <span class="nav-toggle__bar"></span>
         <span class="nav-toggle__bar"></span>
@@ -43,43 +40,45 @@ const currentPath = Astro.url.pathname;
   </div>
 </header>
 
+<script>
+  import '../scripts/header.ts';
+</script>
+
 <style>
   .header {
+    --header-link-color: #ffffff;
+    --header-icon-color: #ffffff;
+    --header-toggle-color: #ffffff;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    background: #000000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    padding-block: 1rem;
+    gap: 2.5rem;
+    min-height: 72px;
+    padding-block: 0.75rem;
   }
 
-  .header__logo img {
-    width: clamp(200px, 28vw, 357px);
-    height: auto;
-    transition: opacity var(--transition);
+  .header__logo {
+    flex-shrink: 0;
+    z-index: 1002;
+    margin-right: auto;
   }
 
-  .header__logo:hover img {
-    opacity: 0.8;
-  }
-
-  .header__nav {
-    display: none;
-    flex: 1;
-    justify-content: flex-end;
-  }
-
-  .header__actions {
+  .header__menu {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: flex-end;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    margin-left: auto;
+    min-width: 0;
+    z-index: 1002;
   }
 
   .search-toggle {
@@ -88,23 +87,25 @@ const currentPath = Astro.url.pathname;
     justify-content: center;
     width: 40px;
     height: 40px;
+    flex-shrink: 0;
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--color-primary);
-    transition: color var(--transition);
+    color: var(--header-icon-color);
+    transition: opacity var(--transition);
   }
 
   .search-toggle:hover {
-    color: var(--color-muted);
+    opacity: 0.72;
   }
 
   .nav-toggle {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     background: none;
@@ -117,7 +118,7 @@ const currentPath = Astro.url.pathname;
     display: block;
     width: 22px;
     height: 2px;
-    background: var(--color-primary);
+    background: var(--header-toggle-color);
     transition: transform var(--transition), opacity var(--transition);
   }
 
@@ -152,7 +153,7 @@ const currentPath = Astro.url.pathname;
     padding: 1rem 0;
     font-family: var(--font-body);
     font-size: clamp(1.25rem, 3vw, 2rem);
-    color: var(--color-secondary);
+    color: #ffffff;
     background: transparent;
     border: none;
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -166,7 +167,7 @@ const currentPath = Astro.url.pathname;
   .search-overlay__close {
     background: none;
     border: none;
-    color: var(--color-secondary);
+    color: #ffffff;
     cursor: pointer;
     padding: 0.5rem;
   }
@@ -183,10 +184,6 @@ const currentPath = Astro.url.pathname;
   }
 
   @media (min-width: 1025px) {
-    .header__nav {
-      display: block;
-    }
-
     .search-toggle {
       display: flex;
     }
