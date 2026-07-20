@@ -8,6 +8,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { mainNavigation } from '../data/navigation';
+import { resolvePageCardImage } from '../utils/images';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -67,12 +68,16 @@ function createFallbackPage(slug: string) {
 function getCategoryItems(slug: string) {
   const navItem = mainNavigation.find((item) => item.href === `/${slug}/`);
   if (!navItem?.children) return [];
-  return navItem.children.map((child) => ({
-    title: child.label,
-    href: child.href,
-    image: '',
-    alt: child.label,
-  }));
+  return navItem.children.map((child) => {
+    const childSlug = child.href.replace(/^\/|\/$/g, '');
+    const page = getPage(childSlug);
+    return {
+      title: child.label,
+      href: child.href,
+      image: resolvePageCardImage(page?.featuredImage, page?.content) ?? '',
+      alt: child.label,
+    };
+  });
 }
 
 const legacyPage =

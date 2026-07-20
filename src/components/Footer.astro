@@ -31,7 +31,7 @@ const latestPosts = (blogPosts as { slug: string; title: string }[]).slice(0, 7)
         </a>
       </div>
 
-      <p class="footer__copyright">&copy; 2025 All rights reserved</p>
+      <p class="footer__copyright">&copy; 2026 All rights reserved</p>
     </div>
 
     <div class="footer__column reveal">
@@ -94,7 +94,7 @@ const latestPosts = (blogPosts as { slug: string; title: string }[]).slice(0, 7)
 
   .footer__inner {
     display: grid;
-    grid-template-columns: minmax(220px, 1.35fr) repeat(5, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.6fr) repeat(5, minmax(0, 1fr));
     gap: clamp(1.5rem, 2.5vw, 2.5rem);
     align-items: start;
   }
@@ -103,11 +103,23 @@ const latestPosts = (blogPosts as { slug: string; title: string }[]).slice(0, 7)
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    min-width: 0;
     max-width: 22rem;
   }
 
   .footer__logo {
     margin-bottom: 1.25rem;
+    max-width: 100%;
+  }
+
+  .footer__logo :global(.site-logo__image) {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+  }
+
+  .footer__column {
+    min-width: 0;
   }
 
   .footer__intro {
@@ -193,6 +205,10 @@ const latestPosts = (blogPosts as { slug: string; title: string }[]).slice(0, 7)
     .footer__brand {
       grid-column: 1 / -1;
       max-width: 36rem;
+    }
+
+    .footer__logo :global(.site-logo__image) {
+      max-width: 320px;
     }
   }
 

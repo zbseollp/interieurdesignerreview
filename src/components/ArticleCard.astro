@@ -2,7 +2,7 @@
 interface Props {
   title: string;
   href: string;
-  image: string;
+  image?: string;
   alt: string;
   variant?: 'default' | 'sidebar';
 }
@@ -11,9 +11,11 @@ const { title, href, image, alt, variant = 'default' } = Astro.props;
 ---
 <article class:list={['article-card', variant === 'sidebar' && 'article-card--sidebar', 'reveal']}>
   <a href={href} class="article-card__link">
-    <div class="article-card__image">
-      <img src={image} alt={alt} width={400} height={260} loading="lazy" />
-    </div>
+    {image && (
+      <div class="article-card__image">
+        <img src={image} alt={alt} width={400} height={260} loading="lazy" />
+      </div>
+    )}
     <h3>{title}</h3>
   </a>
 </article>
